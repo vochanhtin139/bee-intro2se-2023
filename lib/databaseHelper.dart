@@ -82,7 +82,7 @@ class DatabaseHelper {
 
   Future<List> getSuggestionWordSearching(String word) async {
     Database? db = await instance.database;
-    var result = await db!.rawQuery('SELECT * FROM av WHERE word like \'%$word\' LIMIT 10');
+    var result = await db!.rawQuery('SELECT * FROM av WHERE word like \'$word%\' LIMIT 20');
     return result.toList();
   }
 }
