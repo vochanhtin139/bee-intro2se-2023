@@ -48,7 +48,7 @@ class _dictionaryDetailScreenState extends State<dictionaryDetailScreen> {
         ),
         body: TabBarView(
           children: [
-            buildPage('offline'),
+            OfflineWeb(wordDetail: widget.wordDetail,),
             OxfordWeb(),
             CambridgeWeb(),
             buildPage('image'),
@@ -125,6 +125,31 @@ class _CambridgeWebState extends State<CambridgeWeb> {
 }
 
 
+class OfflineWeb extends StatefulWidget {
+  wordMeaning wordDetail;
 
+  OfflineWeb({super.key, required this.wordDetail});
+
+  @override
+  State<OfflineWeb> createState() => _OfflineWebState();
+}
+
+class _OfflineWebState extends State<OfflineWeb> {
+  late final WebViewController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = WebViewController();
+    controller.loadHtmlString('${widget.wordDetail.html}');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: WebViewWidget(controller: controller),
+    );
+  }
+}
  
 
