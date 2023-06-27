@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   sqflite: any
   fluttertoast: any
+  webview_flutter: ^4.2.2
 
 dev_dependencies:
   flutter_test:
