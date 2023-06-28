@@ -64,6 +64,12 @@ class DatabaseHelper {
     return result.toList();
   }
 
+  Future<List> getRandomWord() async {
+    Database? db = await instance.database;
+    var result = await db!.rawQuery('SELECT * FROM av ORDER BY RANDOM() LIMIT 5');
+    return result.toList();
+  }
+
   Future<int?> getCount() async {
     var db = await instance.database;
     return Sqflite.firstIntValue(await db!.rawQuery('SELECT COUNT(_id) FROM $table'));
