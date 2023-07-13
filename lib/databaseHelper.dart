@@ -70,6 +70,12 @@ class DatabaseHelper {
     return result.toList();
   }
 
+  Future<List> getHistoryWord() async {
+    Database? db = await instance.database;
+    var result = await db!.rawQuery('SELECT * FROM av LIMIT 10');
+    return result.toList();
+  }
+
   Future<int?> getCount() async {
     var db = await instance.database;
     return Sqflite.firstIntValue(await db!.rawQuery('SELECT COUNT(_id) FROM $table'));

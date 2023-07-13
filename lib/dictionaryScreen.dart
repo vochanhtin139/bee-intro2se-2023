@@ -16,36 +16,130 @@ class dictionaryScreen extends StatefulWidget {
 }
 
 class _homeScreenState extends State<dictionaryScreen> {
+  DatabaseHelper dbHelper = DatabaseHelper.instance;
+  List<wordMeaning> matchQuery = [];
+  List<wordMeaning> matchQueryHistory = [];
+
+  Future<void> openDatabaseAndExecuteQueries() async {
+    dbHelper.getHistoryWord().then((rows) {
+      matchQueryHistory = [];
+
+      rows.forEach((row) {
+        matchQueryHistory.add(wordMeaning.map(row));
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Personal Journal'),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: customSearchKeyWordDictionary(),
-              );
-            },
-            icon: const Icon(Icons.search)
-          )
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Center(
-            child: Text('Hi'),
-          ),
-        ],
-      ),
+    return FutureBuilder(
+      future: dbHelper.getRandomWord().then((rows) {
+        matchQuery = [];
+
+        rows.forEach((row) { 
+          matchQuery.add(wordMeaning.map(row));
+        });
+      }),
+      builder:(context, snapshot) {
+        Widget listview;
+        if (snapshot.connectionState == ConnectionState.done) {
+          listview = Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              leading: IconButton(
+                onPressed: () {}, 
+                icon: Icon(Icons.menu),
+              ),
+              title: Text('Nhập từ vựng...'),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    showSearch(
+                      context: context,
+                      delegate: customSearchKeyWordDictionary(),
+                    );
+                  },
+                  icon: Icon(Icons.search)
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.more_vert)
+                )
+              ],
+            ),
+            body: Column(
+              children: [
+                Container(
+                  height: 200,
+                  child: ListView.builder(
+                    controller: ScrollController(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: matchQuery.length,
+                    itemBuilder: (context, index) {
+                      return buildCard(item: matchQuery[index]);
+                    },
+                  )
+                ),
+                Text('Tìm kiếm gần đây'),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: ListView.builder(
+                    controller: ScrollController(),
+                    scrollDirection: Axis.vertical,
+                    itemCount: matchQuery.length,
+                    itemBuilder: (context, index) {
+                      return buildCard(item: matchQuery[index]);
+                    },
+                  )
+                )
+              ],
+            )
+          );
+        } else if (snapshot.hasError) {
+            listview = Text(snapshot.error.toString());
+        } else {
+          listview = Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            )
+          );
+        }
+
+        return listview;
+      },
     );
   }
+
+  Widget buildCard({required wordMeaning item}) => Container(
+    margin: EdgeInsets.all(10),
+    width: 375,
+    height: 300,
+    color: Theme.of(context).colorScheme.inversePrimary,
+    child: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(children: [
+        Text(
+          '${item.word}',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Colors.yellow
+          )
+        ),
+        SizedBox(height:10),
+        Text(
+          '${item.description}',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Colors.yellow
+          )
+        )
+      ],
+      ),
+    )
+  );
 }
 
 class customSearchKeyWordDictionary extends SearchDelegate {
@@ -95,6 +189,7 @@ class customSearchKeyWordDictionary extends SearchDelegate {
 
         if (snapshot.hasData) {
           listView = ListView.builder(
+            scrollDirection: Axis.horizontal,
             itemCount: matchQuery.length,
             itemBuilder: (context, index) {
               var result = matchQuery[index].word;

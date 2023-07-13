@@ -1,3 +1,4 @@
+import 'package:bee/databaseHelper.dart';
 import 'package:bee/wordMeaning.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
