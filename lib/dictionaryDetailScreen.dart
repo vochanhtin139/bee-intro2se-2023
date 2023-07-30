@@ -2,6 +2,7 @@ import 'package:bee/databaseHelper.dart';
 import 'package:bee/wordMeaning.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class dictionaryDetailScreen extends StatefulWidget {
@@ -14,6 +15,18 @@ class dictionaryDetailScreen extends StatefulWidget {
 }
 
 class _dictionaryDetailScreenState extends State<dictionaryDetailScreen> {
+  
+  void pronounceUS(String word, String mode) async {
+    FlutterTts flutterTts = FlutterTts();
+
+    if (mode == 'US PRONOUNCIATON') 
+      await flutterTts.setLanguage("en-US");
+    else
+      await flutterTts.setLanguage("en-GB");
+    
+    await flutterTts.speak(word);
+  }
+  
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -28,13 +41,55 @@ class _dictionaryDetailScreenState extends State<dictionaryDetailScreen> {
           ),
           backgroundColor: Colors.orangeAccent,
           actions: [
-            IconButton(
-              onPressed:() {},
-              icon: Icon(
-                Icons.volume_up,
-                color: Colors.white,
-              ),
-            )
+            PopupMenuButton<String>(
+              icon: Icon(Icons.volume_up, color: Colors.white,),
+              onSelected: (value) {
+                pronounceUS('${widget.wordDetail.word}', value);
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem<String>(
+                    value: 'US PRONOUNCIATON',
+                    child: Text('US'),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'UK PRONOUNCIATION',
+                    child: Text('UK'),
+                  ),
+                ];
+              }),
+
+            // IconButton(
+            //   onPressed:() {
+            //     showMenu(
+            //       context: context,
+            //       position: RelativeRect.fromLTRB(0, kToolbarHeight, 0, 0),
+            //       items: <PopupMenuEntry>[
+            //         PopupMenuItem(
+            //           child: Text('Option 1'),
+            //           value: 'option1',
+            //         ),
+            //         PopupMenuItem(
+            //           child: Text('Option 2'),
+            //           value: 'option2',
+            //         ),
+            //         PopupMenuItem(
+            //           child: Text('Option 3'),
+            //           value: 'option3',
+            //         ),
+            //       ],
+            //     ).then((value) {
+            //       // Handle the selected option here
+            //       if (value != null) {
+            //         print('Selected option: $value');
+            //       }
+            //     });
+            //   },
+            //   icon: Icon(
+            //     Icons.volume_up,
+            //     color: Colors.white,
+            //   ),
+            // )
           ],
           bottom: TabBar(
             indicatorColor: const Color.fromARGB(255, 9, 138, 13),

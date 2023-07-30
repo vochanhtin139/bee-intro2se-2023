@@ -39,6 +39,7 @@ dependencies:
   fluttertoast: any
   webview_flutter: ^4.2.2
   flutter_html: any
+  flutter_tts: any
 
 dev_dependencies:
   flutter_test:
