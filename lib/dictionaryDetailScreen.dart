@@ -1,6 +1,7 @@
 import 'package:bee/databaseHelper.dart';
 import 'package:bee/wordMeaning.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class dictionaryDetailScreen extends StatefulWidget {
@@ -50,9 +51,9 @@ class _dictionaryDetailScreenState extends State<dictionaryDetailScreen> {
         body: TabBarView(
           children: [
             OfflineWeb(wordDetail: widget.wordDetail,),
-            OxfordWeb(),
-            CambridgeWeb(),
-            buildPage('image'),
+            OxfordWeb(wordDetail: widget.wordDetail),
+            CambridgeWeb(wordDetail: widget.wordDetail),
+            googleImageWebView(wordDetail: widget.wordDetail),
           ],
         ),
       ),
@@ -68,7 +69,9 @@ class _dictionaryDetailScreenState extends State<dictionaryDetailScreen> {
 }
 
 class OxfordWeb extends StatefulWidget {
-  const OxfordWeb({super.key});
+  wordMeaning wordDetail;
+
+  OxfordWeb({super.key, required this.wordDetail});
 
   @override
   State<OxfordWeb> createState() => _OxfordWebState();
@@ -82,7 +85,7 @@ class _OxfordWebState extends State<OxfordWeb> {
     super.initState();
     controller = WebViewController()
       ..loadRequest(
-        Uri.parse('https://www.oxfordlearnersdictionaries.com/'),
+        Uri.parse('https://www.oxfordlearnersdictionaries.com/definition/english/' + '${widget.wordDetail.word}'),
       );
   }
 
@@ -97,7 +100,9 @@ class _OxfordWebState extends State<OxfordWeb> {
 }
 
 class CambridgeWeb extends StatefulWidget {
-  const CambridgeWeb({super.key});
+  wordMeaning wordDetail;
+
+  CambridgeWeb({super.key, required this.wordDetail});
 
   @override
   State<CambridgeWeb> createState() => _CambridgeWebState();
@@ -111,7 +116,7 @@ class _CambridgeWebState extends State<CambridgeWeb> {
     super.initState();
     controller = WebViewController()
       ..loadRequest(
-        Uri.parse('https://dictionary.cambridge.org/'),
+        Uri.parse('https://dictionary.cambridge.org/dictionary/english/' + '${widget.wordDetail.word}'),
       );
   }
 
@@ -148,9 +153,45 @@ class _OfflineWebState extends State<OfflineWeb> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WebViewWidget(controller: controller),
+      // body: WebViewWidget(controller: controller),
+      body: SingleChildScrollView(child: Html(data: '${widget.wordDetail.html}',))
     );
   }
 }
- 
 
+class googleImageWebView extends StatefulWidget {
+  wordMeaning wordDetail;
+
+  googleImageWebView({super.key, required this.wordDetail});
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _googleImageWebviewState();
+  }
+}
+
+class _googleImageWebviewState extends State<googleImageWebView> {
+  late final WebViewController controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    
+    controller = WebViewController()
+      ..loadRequest(
+        Uri.parse('https://www.google.com/search?tbm=isch&q=' + '${widget.wordDetail.word}'),
+      );
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: WebViewWidget(
+        controller: controller,
+      ),
+    );
+  }
+  
+}
