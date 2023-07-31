@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'dictionaryDetailScreen.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class dictionaryScreen extends StatefulWidget {
   const dictionaryScreen({super.key});
@@ -19,6 +20,8 @@ class _homeScreenState extends State<dictionaryScreen> {
   DatabaseHelper dbHelper = DatabaseHelper.instance;
   List<wordMeaning> matchQuery = [];
   List<wordMeaning> matchQueryHistory = [];
+  PageController _pageController = PageController(initialPage: 0);
+  int _currentPage = 0;
 
   Future<void> openDatabaseAndExecuteQueries() async {
     dbHelper.getHistoryWord().then((rows) {
@@ -28,6 +31,12 @@ class _homeScreenState extends State<dictionaryScreen> {
         matchQueryHistory.add(wordMeaning.map(row));
       });
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -67,33 +76,54 @@ class _homeScreenState extends State<dictionaryScreen> {
                 )
               ],
             ),
-            body: Column(
-              children: [
-                Container(
-                  height: 200,
-                  child: ListView.builder(
-                    controller: ScrollController(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: matchQuery.length,
-                    itemBuilder: (context, index) {
-                      return buildCard(item: matchQuery[index]);
-                    },
+            body: Stack(
+              children: [Column(
+                children: [
+                  Container(
+                    // height: 300,
+                    // child: ListView.builder(
+                    //   controller: ScrollController(),
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemCount: matchQuery.length,
+                    //   itemBuilder: (context, index) {
+                    //     return buildCard(item: matchQuery[index]);
+                    //   },
+                    // )
+                    height: 200,
+                    child: PageView.builder(
+                      controller: _pageController,
+                      onPageChanged:(value) {
+                        _currentPage = value;
+                        print('page');
+                        print(_currentPage);
+                      },
+                      itemCount: matchQuery.length,
+                      itemBuilder: (context, index) => buildCard(item: matchQuery[index])
+                    ),
+                  ),
+                  SmoothPageIndicator(
+                    controller: _pageController,
+                    count: matchQuery.length,
+                    effect:SwapEffect(
+                      dotHeight: 8,
+                      dotWidth: 8
+                    )
+                  ),
+                  Text('Tìm kiếm gần đây'),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: ListView.builder(
+                      controller: ScrollController(),
+                      scrollDirection: Axis.vertical,
+                      itemCount: matchQuery.length,
+                      itemBuilder: (context, index) {
+                        return buildCard(item: matchQuery[index]);
+                      },
+                    )
                   )
-                ),
-                Text('Tìm kiếm gần đây'),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: ListView.builder(
-                    controller: ScrollController(),
-                    scrollDirection: Axis.vertical,
-                    itemCount: matchQuery.length,
-                    itemBuilder: (context, index) {
-                      return buildCard(item: matchQuery[index]);
-                    },
-                  )
-                )
-              ],
+                ],
+              ),]
             )
           );
         } else if (snapshot.hasError) {
@@ -111,34 +141,39 @@ class _homeScreenState extends State<dictionaryScreen> {
     );
   }
 
-  Widget buildCard({required wordMeaning item}) => Container(
-    margin: EdgeInsets.all(10),
-    width: 375,
-    height: 300,
-    color: Theme.of(context).colorScheme.inversePrimary,
-    child: Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(children: [
-        Text(
-          '${item.word}',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-            color: Colors.yellow
+  Widget buildCard({required wordMeaning item}) => Card(
+    elevation: 4,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    margin: const EdgeInsets.all(10),
+    child: Container(
+      margin: EdgeInsets.all(10),
+      width: 300,
+      height: 200,
+      color: Theme.of(context).colorScheme.inversePrimary,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(children: [
+          Text(
+            '${item.word}',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.yellow
+            )
+          ),
+          SizedBox(height:10),
+          Text(
+            '${item.description}',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.yellow
+            )
           )
+        ],
         ),
-        SizedBox(height:10),
-        Text(
-          '${item.description}',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-            color: Colors.yellow
-          )
-        )
-      ],
-      ),
-    )
+      )
+    ),
   );
 }
 
