@@ -12,6 +12,14 @@ class wordMeaning {
     this.pronounce = obj['pronounce'];
   }
 
+  wordMeaning.mapHistory(dynamic obj) {
+    this.id = 0;
+    this.word = obj['_word'];
+    this.html = '';
+    this.description = '';
+    this.pronounce = '';
+  }
+
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
     map['_id'] = this.id;

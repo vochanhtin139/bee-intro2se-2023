@@ -58,6 +58,11 @@ class DatabaseHelper {
     return await db!.insert(table, row);
   }
 
+  Future<void> insertIntoHistory(String word) async {
+    Database? db = await instance.database;
+    var result = await db!.rawQuery("INSERT INTO history(_word) VALUES(\"" + word + "\")");
+  }
+
   Future<List> getAllWordMeaing() async {
     Database? db = await instance.database;
     var result = await db!.query(table);
@@ -72,7 +77,7 @@ class DatabaseHelper {
 
   Future<List> getHistoryWord() async {
     Database? db = await instance.database;
-    var result = await db!.rawQuery('SELECT * FROM av LIMIT 10');
+    var result = await db!.rawQuery('SELECT * FROM history ORDER BY _idHistory DESC LIMIT 30');
     return result.toList();
   }
 

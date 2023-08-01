@@ -28,9 +28,15 @@ class _homeScreenState extends State<dictionaryScreen> {
       matchQueryHistory = [];
 
       rows.forEach((row) {
-        matchQueryHistory.add(wordMeaning.map(row));
+        matchQueryHistory.add(wordMeaning.mapHistory(row));
       });
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -42,13 +48,30 @@ class _homeScreenState extends State<dictionaryScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: dbHelper.getRandomWord().then((rows) {
-        matchQuery = [];
+      future: Future.wait([
+        dbHelper.getRandomWord().then((rows) {
+          matchQuery = [];
 
-        rows.forEach((row) { 
-          matchQuery.add(wordMeaning.map(row));
+          rows.forEach((row) { 
+            matchQuery.add(wordMeaning.map(row));
+          });
+        },),
+
+        dbHelper.getHistoryWord().then((rows) {
+        matchQueryHistory = [];
+
+        rows.forEach((row) {
+          matchQueryHistory.add(wordMeaning.mapHistory(row));
         });
-      }),
+      })
+      ], ),
+      // dbHelper.getRandomWord().then((rows) {
+      //   matchQuery = [];
+
+      //   rows.forEach((row) { 
+      //     matchQuery.add(wordMeaning.map(row));
+      //   });
+      // },),
       builder:(context, snapshot) {
         Widget listview;
         if (snapshot.connectionState == ConnectionState.done) {
@@ -76,55 +99,42 @@ class _homeScreenState extends State<dictionaryScreen> {
                 )
               ],
             ),
-            body: Stack(
-              children: [Column(
+            body: SingleChildScrollView(
+              child: Column(
                 children: [
                   Container(
-                    // height: 300,
-                    // child: ListView.builder(
-                    //   controller: ScrollController(),
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemCount: matchQuery.length,
-                    //   itemBuilder: (context, index) {
-                    //     return buildCard(item: matchQuery[index]);
-                    //   },
-                    // )
                     height: 200,
                     child: PageView.builder(
+                      scrollDirection: Axis.horizontal,
                       controller: _pageController,
-                      onPageChanged:(value) {
+                      onPageChanged: (value) {
                         _currentPage = value;
                         print('page');
                         print(_currentPage);
                       },
                       itemCount: matchQuery.length,
-                      itemBuilder: (context, index) => buildCard(item: matchQuery[index])
+                      itemBuilder: (context, index) => buildCard(item: matchQuery[index]),
                     ),
                   ),
                   SmoothPageIndicator(
                     controller: _pageController,
                     count: matchQuery.length,
-                    effect:SwapEffect(
+                    effect: SwapEffect(
                       dotHeight: 8,
                       dotWidth: 8
-                    )
+                    ),
                   ),
-                  Text('Tìm kiếm gần đây'),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    child: ListView.builder(
-                      controller: ScrollController(),
-                      scrollDirection: Axis.vertical,
-                      itemCount: matchQuery.length,
-                      itemBuilder: (context, index) {
-                        return buildCard(item: matchQuery[index]);
-                      },
-                    )
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    controller: ScrollController(),
+                    scrollDirection: Axis.vertical,
+                    itemCount: matchQueryHistory.length,
+                    itemBuilder: (context, index) => buildCard(item: matchQueryHistory[index])
                   )
                 ],
-              ),]
-            )
+              ),
+            ),
           );
         } else if (snapshot.hasError) {
             listview = Text(snapshot.error.toString());
@@ -269,6 +279,7 @@ class customSearchKeyWordDictionary extends SearchDelegate {
                 title: Text(result!),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => dictionaryDetailScreen(wordDetail: matchQuery[index],)));
+                  dbHelper.insertIntoHistory(matchQuery[index].word!);
                 },
               );
             },
