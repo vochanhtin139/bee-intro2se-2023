@@ -23,15 +23,15 @@ class _homeScreenState extends State<dictionaryScreen> {
   PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
-  Future<void> openDatabaseAndExecuteQueries() async {
-    dbHelper.getHistoryWord().then((rows) {
-      matchQueryHistory = [];
+  // Future<void> openDatabaseAndExecuteQueries() async {
+  //   dbHelper.getHistoryWord().then((rows) {
+  //     matchQueryHistory = [];
 
-      rows.forEach((row) {
-        matchQueryHistory.add(wordMeaning.mapHistory(row));
-      });
-    });
-  }
+  //     rows.forEach((row) {
+  //       matchQueryHistory.add(wordMeaning.mapHistory(row));
+  //     });
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -43,6 +43,29 @@ class _homeScreenState extends State<dictionaryScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _loadSearchHistory();
+  }
+
+  void _loadSearchHistory() async {
+    dbHelper.getHistoryWord().then((rows) {
+      matchQueryHistory = [];
+
+      rows.forEach((row) {
+        matchQueryHistory.add(wordMeaning.mapHistory(row));
+      });
+    });
+  }
+
+  callback() {
+    setState(() {
+      dbHelper.getHistoryWord().then((rows) {
+        matchQueryHistory = [];
+
+        rows.forEach((row) {
+          matchQueryHistory.add(wordMeaning.mapHistory(row));
+        });
+      });
+    });
   }
 
   @override
@@ -57,13 +80,13 @@ class _homeScreenState extends State<dictionaryScreen> {
           });
         },),
 
-        dbHelper.getHistoryWord().then((rows) {
-        matchQueryHistory = [];
+      //   dbHelper.getHistoryWord().then((rows) {
+      //   matchQueryHistory = [];
 
-        rows.forEach((row) {
-          matchQueryHistory.add(wordMeaning.mapHistory(row));
-        });
-      })
+      //   rows.forEach((row) {
+      //     matchQueryHistory.add(wordMeaning.mapHistory(row));
+      //   });
+      // })
       ], ),
       // dbHelper.getRandomWord().then((rows) {
       //   matchQuery = [];
@@ -88,7 +111,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                   onPressed: () {
                     showSearch(
                       context: context,
-                      delegate: customSearchKeyWordDictionary(),
+                      delegate: customSearchKeyWordDictionary(callBackFunction: callback),
                     );
                   },
                   icon: Icon(Icons.search)
@@ -194,6 +217,9 @@ class customSearchKeyWordDictionary extends SearchDelegate {
 
   DatabaseHelper dbHelper = DatabaseHelper.instance;
   List<wordMeaning> matchQuery = [];
+  final Function callBackFunction;
+
+  customSearchKeyWordDictionary({Key? key, required this.callBackFunction});
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -280,6 +306,7 @@ class customSearchKeyWordDictionary extends SearchDelegate {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => dictionaryDetailScreen(wordDetail: matchQuery[index],)));
                   dbHelper.insertIntoHistory(matchQuery[index].word!);
+                  callBackFunction();
                 },
               );
             },

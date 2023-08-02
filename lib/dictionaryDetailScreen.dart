@@ -15,7 +15,8 @@ class dictionaryDetailScreen extends StatefulWidget {
 }
 
 class _dictionaryDetailScreenState extends State<dictionaryDetailScreen> {
-  
+  DatabaseHelper dbHelper = DatabaseHelper.instance;
+
   void pronounceUS(String word, String mode) async {
     FlutterTts flutterTts = FlutterTts();
 
