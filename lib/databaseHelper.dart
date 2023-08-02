@@ -77,7 +77,7 @@ class DatabaseHelper {
 
   Future<List> getHistoryWord() async {
     Database? db = await instance.database;
-    var result = await db!.rawQuery('SELECT * FROM history ORDER BY _idHistory DESC LIMIT 30');
+    var result = await db!.rawQuery('SELECT av.word, av.description, av.html, av.pronouce FROM history, av WHERE history._word = av.word ORDER BY _idHistory DESC LIMIT 30');
     return result.toList();
   }
 

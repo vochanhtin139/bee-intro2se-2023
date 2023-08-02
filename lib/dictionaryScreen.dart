@@ -126,7 +126,7 @@ class _homeScreenState extends State<dictionaryScreen> {
               child: Column(
                 children: [
                   Container(
-                    height: 200,
+                    height: 300,
                     child: PageView.builder(
                       scrollDirection: Axis.horizontal,
                       controller: _pageController,
@@ -136,7 +136,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                         print(_currentPage);
                       },
                       itemCount: matchQuery.length,
-                      itemBuilder: (context, index) => buildCard(item: matchQuery[index]),
+                      itemBuilder: (context, index) => buildCardHorizontal(item: matchQuery[index]),
                     ),
                   ),
                   SmoothPageIndicator(
@@ -145,6 +145,20 @@ class _homeScreenState extends State<dictionaryScreen> {
                     effect: SwapEffect(
                       dotHeight: 8,
                       dotWidth: 8
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        'Lịch sử tìm kiếm',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 140, 127, 127),
+                        ),
+                      ),
                     ),
                   ),
                   ListView.builder(
@@ -174,6 +188,77 @@ class _homeScreenState extends State<dictionaryScreen> {
     );
   }
 
+  Widget buildCardHorizontal({required wordMeaning item}) => Card(
+    elevation: 4,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    margin: const EdgeInsets.all(10),
+    child: Container(
+      margin: EdgeInsets.all(10),
+      width: 300,
+      height: 100,
+      color: Theme.of(context).colorScheme.inversePrimary,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/creative-teaching.png',
+              height: 100,
+              width: 100,
+            ),
+            SizedBox(height:20),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  '${item.word}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: Colors.yellow,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height:10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  '${item.pronounce}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15,
+                    color: Color.fromARGB(255, 140, 127, 127),
+                    fontStyle: FontStyle.italic
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height:10),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  '${item.description}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Colors.yellow,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      )
+    ),
+  );
+
+
   Widget buildCard({required wordMeaning item}) => Card(
     elevation: 4,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -181,30 +266,56 @@ class _homeScreenState extends State<dictionaryScreen> {
     child: Container(
       margin: EdgeInsets.all(10),
       width: 300,
-      height: 200,
+      height: 100,
       color: Theme.of(context).colorScheme.inversePrimary,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Column(children: [
-          Text(
-            '${item.word}',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.yellow
-            )
+        child: 
+          Column(
+            children: [
+              Row(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        '${item.word}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.yellow,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        '${item.pronounce}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.yellow,
+                        ),
+                      ),
+                    ),
+                  ),
+                ]
+              ),
+              SizedBox(height:10),
+              Text(
+                '${item.description}',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.yellow
+                )
+              )
+            ],
           ),
-          SizedBox(height:10),
-          Text(
-            '${item.description}',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.yellow
-            )
-          )
-        ],
-        ),
       )
     ),
   );
