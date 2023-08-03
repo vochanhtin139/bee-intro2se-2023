@@ -126,7 +126,7 @@ class _homeScreenState extends State<dictionaryScreen> {
               child: Column(
                 children: [
                   Container(
-                    height: 300,
+                    height: 320,
                     child: PageView.builder(
                       scrollDirection: Axis.horizontal,
                       controller: _pageController,
@@ -195,7 +195,7 @@ class _homeScreenState extends State<dictionaryScreen> {
     child: Container(
       margin: EdgeInsets.all(10),
       width: 300,
-      height: 100,
+      height: 300,
       color: Theme.of(context).colorScheme.inversePrimary,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -249,6 +249,8 @@ class _homeScreenState extends State<dictionaryScreen> {
                     fontSize: 15,
                     color: Colors.yellow,
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
@@ -266,7 +268,7 @@ class _homeScreenState extends State<dictionaryScreen> {
     child: Container(
       margin: EdgeInsets.all(10),
       width: 300,
-      height: 100,
+      // height: 100,
       color: Theme.of(context).colorScheme.inversePrimary,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -275,30 +277,35 @@ class _homeScreenState extends State<dictionaryScreen> {
             children: [
               Row(
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        '${item.word}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.yellow,
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                        child: Text(
+                          '${item.word}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.yellow,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        '${item.pronounce}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.yellow,
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                        child: Text(
+                          '${item.pronounce}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 15,
+                            color: Color.fromARGB(255, 140, 127, 127),
+                            fontStyle: FontStyle.italic
+                          ),
                         ),
                       ),
                     ),
@@ -306,13 +313,17 @@ class _homeScreenState extends State<dictionaryScreen> {
                 ]
               ),
               SizedBox(height:10),
-              Text(
-                '${item.description}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.yellow
-                )
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  '${item.description}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Colors.yellow,
+                  ),
+                  textAlign: TextAlign.justify,
+                ),
               )
             ],
           ),
