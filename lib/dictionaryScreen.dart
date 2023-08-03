@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'dictionaryDetailScreen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class dictionaryScreen extends StatefulWidget {
   const dictionaryScreen({super.key});
@@ -410,12 +411,30 @@ Drawer buildDrawer(BuildContext context) {
           ListTile(
             leading: Icon(Icons.book_online),
             title: Text('Từ điển Oxford'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MiniBrowser(
+                    initialUrl: 'https://www.oxfordlearnersdictionaries.com/',
+                  ),
+                ),
+              );
+            },
           ),
           ListTile(
             leading: Icon(Icons.book_online),
             title: Text('Từ điển Cambridge'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MiniBrowser(
+                    initialUrl: 'https://dictionary.cambridge.org/vi',
+                  ),
+                ),
+              );
+            },
           ),
           ListTile(
             leading: Icon(Icons.backup_table),
@@ -591,5 +610,114 @@ class customSearchKeyWordDictionary extends SearchDelegate {
     );
   }
 
+}
+
+class MiniBrowser extends StatefulWidget {
+  final String initialUrl;
+
+  MiniBrowser({required this.initialUrl});
+
+  @override
+  _MiniBrowserState createState() => _MiniBrowserState();
+}
+
+class _MiniBrowserState extends State<MiniBrowser> {
+  InAppWebViewController? webViewController;
+  TextEditingController urlController = TextEditingController();
+  String currentUrl = '';
+  String pageTitle = '';
+
+  @override
+  void initState() {
+    super.initState();
+    urlController.text = widget.initialUrl;
+    currentUrl = widget.initialUrl;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Icon(Icons.close),
+        ),
+        title: Text(pageTitle.isEmpty ? currentUrl : pageTitle), // Display the website title or current URL
+        actions: [
+          // Back button
+          IconButton(
+            onPressed: () {
+              if (webViewController != null) {
+                webViewController!.goBack();
+              }
+            },
+            icon: Icon(Icons.arrow_back),
+          ),
+          // Reload button
+          IconButton(
+            onPressed: () {
+              if (webViewController != null) {
+                webViewController!.reload();
+              }
+            },
+            icon: Icon(Icons.refresh),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: urlController,
+                    decoration: InputDecoration(hintText: 'Enter URL'),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    if (urlController.text.isNotEmpty) {
+                      if (webViewController != null) {
+                        webViewController!.loadUrl(
+                            urlRequest: URLRequest(url: Uri.parse(urlController.text)));
+                      }
+                    }
+                  },
+                  icon: Icon(Icons.link),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: InAppWebView(
+              initialUrlRequest: URLRequest(url: Uri.parse(widget.initialUrl)),
+              initialOptions: InAppWebViewGroupOptions(
+                android: AndroidInAppWebViewOptions(
+                  useHybridComposition: true,
+                ),
+              ),
+              onWebViewCreated: (controller) {
+                webViewController = controller;
+              },
+              // Listen to URL changes
+              onLoadStart: (controller, url) {
+                setState(() {
+                  currentUrl = url.toString();
+                });
+              },
+              // Listen to page title changes
+              onTitleChanged: (controller, title) {
+                setState(() {
+                  pageTitle = title ?? '';
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
