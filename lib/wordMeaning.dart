@@ -14,10 +14,10 @@ class wordMeaning {
 
   wordMeaning.mapHistory(dynamic obj) {
     this.id = 0;
-    this.word = obj['_word'];
+    this.word = obj['word'];
     this.html = '';
-    this.description = '';
-    this.pronounce = '';
+    this.description = obj['description'];
+    this.pronounce = obj['pronounce'];
   }
 
   Map<String, dynamic> toMap() {
