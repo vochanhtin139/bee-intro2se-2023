@@ -8,7 +8,7 @@ import 'package:path/path.dart';
 class DatabaseHelper {
   static final _databaseName = 'eng_dictionary.db';
   static final _databaseVersion = 1;
-  static final table = 'av';
+  static var table = 'av';
   static final columnID = '_id';
   static final columnWord = 'word';
   static final columnHtml = 'html';
@@ -51,6 +51,14 @@ class DatabaseHelper {
     }
 
     return await openDatabase(path, version: _databaseVersion);
+  }
+
+  static void setToAV() {
+    table = 'av';
+  }
+
+  static void setToVA() {
+    table = 'va';
   }
 
   Future<int> insert(Map<String, dynamic> row) async {
@@ -99,7 +107,7 @@ class DatabaseHelper {
 
   Future<List> getSuggestionWordSearching(String word) async {
     Database? db = await instance.database;
-    var result = await db!.rawQuery('SELECT * FROM av WHERE word like \'$word%\' LIMIT 20');
+    var result = await db!.rawQuery('SELECT * FROM ' + table + ' WHERE word like \'$word%\' LIMIT 20');
     return result.toList();
   }
 }

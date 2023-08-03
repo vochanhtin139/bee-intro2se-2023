@@ -22,6 +22,7 @@ class _homeScreenState extends State<dictionaryScreen> {
   List<wordMeaning> matchQueryHistory = [];
   PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Future<void> openDatabaseAndExecuteQueries() async {
   //   dbHelper.getHistoryWord().then((rows) {
@@ -99,10 +100,13 @@ class _homeScreenState extends State<dictionaryScreen> {
         Widget listview;
         if (snapshot.connectionState == ConnectionState.done) {
           listview = Scaffold(
+            key: _scaffoldKey,
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
               leading: IconButton(
-                onPressed: () {}, 
+                onPressed: () {
+                  _scaffoldKey.currentState?.openDrawer();
+                }, 
                 icon: Icon(Icons.menu),
               ),
               title: Text('Nhập từ vựng...'),
@@ -122,6 +126,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                 )
               ],
             ),
+            drawer: buildDrawer(context),
             body: SingleChildScrollView(
               child: Column(
                 children: [
@@ -330,6 +335,142 @@ class _homeScreenState extends State<dictionaryScreen> {
       )
     ),
   );
+}
+
+Drawer buildDrawer(BuildContext context) {
+  return Drawer(
+    // child: ListView(
+    //   padding: EdgeInsets.zero,
+    //   children: getDrawerItems(),
+    // ),
+    child: SingleChildScrollView(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 200,
+                  color: Colors.orange,
+                  child: Center(child: Text("BEE")),
+                ),
+              )
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(10, 10, 10, 2.5),
+                  padding: EdgeInsets.fromLTRB(5, 5, 5, 2.5),
+                  child: Text(
+                    "Loại từ điển", 
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          ListTile(
+            leading: Icon(Icons.book),
+            title: Text('Anh - Việt'),
+            onTap: () {
+              DatabaseHelper.setToAV();
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.book),
+            title: Text('Việt - Anh'),
+            onTap: () {
+              DatabaseHelper.setToVA();
+              Navigator.pop(context);
+            },
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(10, 10, 10, 2.5),
+                  padding: EdgeInsets.fromLTRB(5, 5, 5, 2.5),
+                  child: Text(
+                    "Công cụ", 
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          ListTile(
+            leading: Icon(Icons.book_online),
+            title: Text('Từ điển Oxford'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.book_online),
+            title: Text('Từ điển Cambridge'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.backup_table),
+            title: Text('Bảng động từ bất quy tắc'),
+            onTap: () {},
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(10, 10, 10, 2.5),
+                  padding: EdgeInsets.fromLTRB(5, 5, 5, 2.5),
+                  child: Text(
+                    "Tuỳ chọn", 
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Cài đặt'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.close),
+            title: Text('Thoát'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+List<Widget> getDrawerItems() {
+  return [
+    ListTile(
+      leading: Icon(Icons.home),
+      title: Text('Home'),
+      onTap: () {},
+    ),
+    ListTile(
+      leading: Icon(Icons.settings),
+      title: Text('Settings'),
+      onTap: () {},
+    )
+  ];
 }
 
 class customSearchKeyWordDictionary extends SearchDelegate {
