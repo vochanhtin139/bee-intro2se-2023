@@ -68,6 +68,7 @@ flutter:
   assets:
     - assets/eng_dictionary.db
     - assets/creative-teaching.png
+    - assets/irregular_verb_table.db
 
   # To add assets to your application, add an assets section, like this:
   # assets:

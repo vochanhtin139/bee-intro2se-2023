@@ -1,5 +1,6 @@
 import 'package:bee/databaseHelper.dart';
 import 'package:bee/wordMeaning.dart';
+import 'package:bee/irregularVerbScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -439,7 +440,9 @@ Drawer buildDrawer(BuildContext context) {
           ListTile(
             leading: Icon(Icons.backup_table),
             title: Text('Bảng động từ bất quy tắc'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => irregularVerbScreen()));
+            },
           ),
           Row(
             children: [
