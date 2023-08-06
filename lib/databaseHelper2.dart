@@ -64,15 +64,15 @@ class DatabaseHelper2 {
     return result.toList();
   }
 
-  Future<List> getRandomWord() async {
-    Database? db = await instance.database;
-    var result = await db!.rawQuery('SELECT * FROM word ORDER BY RANDOM() LIMIT 5');
-    return result.toList();
-  }
-
   Future<int?> getCount() async {
     var db = await instance.database;
     return Sqflite.firstIntValue(await db!.rawQuery('SELECT COUNT(_id) FROM $table'));
+  }
+
+  Future<List> getSuggestionWordSearching(String text) async {
+    Database? db = await instance.database;
+    var result = await db!.rawQuery('SELECT * FROM ' + table + ' WHERE v1 like \'$text%\'');
+    return result.toList();
   }
 
   Future<int> update(Map<String, dynamic> row) async {
