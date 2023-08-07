@@ -15,6 +15,7 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   DatabaseHelper dbHelper = DatabaseHelper.instance;
   final Function callBackFunction;
+  bool light = true;
 
   _SettingScreenState({Key? key, required this.callBackFunction});
 
@@ -104,7 +105,7 @@ class _SettingScreenState extends State<SettingScreen> {
               color: Theme.of(context).colorScheme.inversePrimary,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Column(
+                child: Row(
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
@@ -120,6 +121,15 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
                       ),
                     ),
+                    Switch(
+                      value: light,
+                      activeColor: Color.fromARGB(255, 6, 236, 79),
+                      onChanged: (bool value) {
+                        setState(() {
+                          light = value;
+                        });
+                      }
+                    )
                   ],
                 ),
               )

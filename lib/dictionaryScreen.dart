@@ -26,6 +26,7 @@ class _homeScreenState extends State<dictionaryScreen> {
   PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _isVisible = true;
 
   // Future<void> openDatabaseAndExecuteQueries() async {
   //   dbHelper.getHistoryWord().then((rows) {
@@ -133,26 +134,32 @@ class _homeScreenState extends State<dictionaryScreen> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    height: 320,
-                    child: PageView.builder(
-                      scrollDirection: Axis.horizontal,
-                      controller: _pageController,
-                      onPageChanged: (value) {
-                        _currentPage = value;
-                        print('page');
-                        print(_currentPage);
-                      },
-                      itemCount: matchQuery.length,
-                      itemBuilder: (context, index) => buildCardHorizontal(item: matchQuery[index]),
+                  Visibility(
+                    visible: false,
+                    child: Container(
+                      height: 320,
+                      child: PageView.builder(
+                        scrollDirection: Axis.horizontal,
+                        controller: _pageController,
+                        onPageChanged: (value) {
+                          _currentPage = value;
+                          print('page');
+                          print(_currentPage);
+                        },
+                        itemCount: matchQuery.length,
+                        itemBuilder: (context, index) => buildCardHorizontal(item: matchQuery[index]),
+                      ),
                     ),
                   ),
-                  SmoothPageIndicator(
-                    controller: _pageController,
-                    count: matchQuery.length,
-                    effect: SwapEffect(
-                      dotHeight: 8,
-                      dotWidth: 8
+                  Visibility(
+                    visible: false,
+                    child: SmoothPageIndicator(
+                      controller: _pageController,
+                      count: matchQuery.length,
+                      effect: SwapEffect(
+                        dotHeight: 8,
+                        dotWidth: 8
+                      ),
                     ),
                   ),
                   Align(
