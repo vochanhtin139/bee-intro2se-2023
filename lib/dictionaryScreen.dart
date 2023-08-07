@@ -1,6 +1,7 @@
 import 'package:bee/databaseHelper.dart';
 import 'package:bee/wordMeaning.dart';
 import 'package:bee/irregularVerbScreen.dart';
+import 'package:bee/settingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -128,7 +129,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                 )
               ],
             ),
-            drawer: buildDrawer(context),
+            drawer: buildDrawer(context, callback),
             body: SingleChildScrollView(
               child: Column(
                 children: [
@@ -339,7 +340,7 @@ class _homeScreenState extends State<dictionaryScreen> {
   );
 }
 
-Drawer buildDrawer(BuildContext context) {
+Drawer buildDrawer(BuildContext context, Function callback) {
   return Drawer(
     // child: ListView(
     //   padding: EdgeInsets.zero,
@@ -464,7 +465,9 @@ Drawer buildDrawer(BuildContext context) {
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Cài đặt'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen(callBackFunction: callback)));
+            },
           ),
           ListTile(
             leading: Icon(Icons.close),

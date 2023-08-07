@@ -71,6 +71,11 @@ class DatabaseHelper {
     var result = await db!.rawQuery("INSERT INTO history(_word) VALUES(\"" + word + "\")");
   }
 
+  Future<void> DeleteHistory() async {
+    Database? db = await instance.database;
+    var result = await db!.rawQuery("DELETE FROM history");
+  }
+
   Future<List> getAllWordMeaing() async {
     Database? db = await instance.database;
     var result = await db!.query(table);
