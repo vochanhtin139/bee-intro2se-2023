@@ -5,19 +5,21 @@ import 'package:flutter/material.dart';
 class SettingScreen extends StatefulWidget {
   // const SettingScreen({super.key});
   final Function callBackFunction;
+  final Function(bool) callBackValue;
 
-  SettingScreen({Key? key, required this.callBackFunction});
+  SettingScreen({Key? key, required this.callBackFunction, required this.callBackValue});
 
   @override
-  State<SettingScreen> createState() => _SettingScreenState(callBackFunction: callBackFunction);
+  State<SettingScreen> createState() => _SettingScreenState(callBackFunction: callBackFunction, callBackValue: callBackValue);
 }
 
 class _SettingScreenState extends State<SettingScreen> {
   DatabaseHelper dbHelper = DatabaseHelper.instance;
   final Function callBackFunction;
+  final Function(bool) callBackValue;
   bool light = true;
 
-  _SettingScreenState({Key? key, required this.callBackFunction});
+  _SettingScreenState({Key? key, required this.callBackFunction, required this.callBackValue});
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +129,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       onChanged: (bool value) {
                         setState(() {
                           light = value;
+                          callBackValue(value);
                         });
                       }
                     )

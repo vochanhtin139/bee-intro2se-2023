@@ -73,6 +73,12 @@ class _homeScreenState extends State<dictionaryScreen> {
     });
   }
 
+  callbackValue(value) {
+    setState(() {
+      _isVisible = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -130,12 +136,12 @@ class _homeScreenState extends State<dictionaryScreen> {
                 )
               ],
             ),
-            drawer: buildDrawer(context, callback),
+            drawer: buildDrawer(context, callback, callbackValue),
             body: SingleChildScrollView(
               child: Column(
                 children: [
                   Visibility(
-                    visible: false,
+                    visible: _isVisible,
                     child: Container(
                       height: 320,
                       child: PageView.builder(
@@ -152,7 +158,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                     ),
                   ),
                   Visibility(
-                    visible: false,
+                    visible: _isVisible,
                     child: SmoothPageIndicator(
                       controller: _pageController,
                       count: matchQuery.length,
@@ -347,7 +353,7 @@ class _homeScreenState extends State<dictionaryScreen> {
   );
 }
 
-Drawer buildDrawer(BuildContext context, Function callback) {
+Drawer buildDrawer(BuildContext context, Function callback, Function(bool) updateVisible) {
   return Drawer(
     // child: ListView(
     //   padding: EdgeInsets.zero,
@@ -473,7 +479,7 @@ Drawer buildDrawer(BuildContext context, Function callback) {
             leading: Icon(Icons.settings),
             title: Text('Cài đặt'),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen(callBackFunction: callback)));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen(callBackFunction: callback, callBackValue: updateVisible)));
             },
           ),
           ListTile(
