@@ -1,4 +1,5 @@
 import 'package:bee/dictionaryScreen.dart';
+import 'package:bee/signInScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -63,11 +64,23 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text('4B Dictionary')
       ),
-      body: FloatingActionButton(
-        child: Text('Dictionary'),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const dictionaryScreen()));
-        },
+      body: Column(
+        children: [
+          FloatingActionButton(
+            heroTag: "btn1",
+            child: Text('Dictionary'),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const dictionaryScreen()));
+            },
+          ),
+          FloatingActionButton(
+            heroTag: "btn2",
+            child: Text('Sign in'),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const signInScreen()));
+            },
+          ),
+        ],
       ),
     );
   }
