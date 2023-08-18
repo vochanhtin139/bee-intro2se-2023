@@ -21,9 +21,8 @@ class _signInScreenState extends State<signInScreen> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(gradient: LinearGradient(colors: [
-          hexStringToColor("CB2B93"),
-          hexStringToColor("9546C4"),
-          hexStringToColor("5E61F4")
+          hexStringToColor("FF5C00"),
+          hexStringToColor("FD923F")
         ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: SingleChildScrollView(
           child: Padding(
@@ -34,11 +33,11 @@ class _signInScreenState extends State<signInScreen> {
                 SizedBox(
                   height: 30,
                 ),
-                reusableTextField("Enter username", Icons.person_outline, false, _emailTextController), 
+                reusableTextField("Tên đăng nhập", Icons.person_outline, false, _emailTextController), 
                 SizedBox(
                   height: 20,
                 ),
-                reusableTextField("Enter password", Icons.lock_outline, true, _passwordTextController),
+                reusableTextField("Mật khẩu", Icons.lock_outline, true, _passwordTextController),
                 SizedBox(
                   height: 20,
                 ),

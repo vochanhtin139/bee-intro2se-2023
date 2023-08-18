@@ -29,9 +29,8 @@ class _signUpScreenState extends State<signUpScreen> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(gradient: LinearGradient(colors: [
-        hexStringToColor("CB2B93"),
-        hexStringToColor("9546C4"),
-        hexStringToColor("5E61F4")
+          hexStringToColor("FF5C00"),
+          hexStringToColor("FD923F")
       ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
       child: SingleChildScrollView(
         child: Padding(
@@ -41,18 +40,21 @@ class _signUpScreenState extends State<signUpScreen> {
               SizedBox(
                   height: 30,
               ),
-              reusableTextField("Enter username", Icons.person_outline, false, _usernameTextController), 
+              reusableTextField("Tên đăng nhập", Icons.person_outline, false, _usernameTextController), 
               SizedBox(
                 height: 20,
               ),
-              reusableTextField("Enter email", Icons.lock_outline, true, _emailTextController),
+              reusableTextField("Địa chỉ email", Icons.lock_outline, true, _emailTextController),
               SizedBox(
                 height: 20,
               ),
-              reusableTextField("Enter password", Icons.person_outline, false, _passwordTextController), 
-              signInSignUpButton(context, false, () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => homeScreen()));
-              })
+              reusableTextField("Nhập mật khẩu", Icons.person_outline, false, _passwordTextController), 
+              Padding(padding: EdgeInsets.only(top: 20),
+                child:
+                signInSignUpButton(context, false, () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => homeScreen()));
+                })
+              )
             ],
           ),
         ),
