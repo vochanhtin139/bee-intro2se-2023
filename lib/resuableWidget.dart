@@ -44,7 +44,7 @@ Container signInSignUpButton(BuildContext context, bool isLogin, Function onTap)
         onTap();
       },
       child: Text(
-        isLogin ? "LOG IN" : "SIGN UP",
+        isLogin ? "ĐĂNG NHẬP" : "ĐĂNG KÝ",
         style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
       ),
       style: ButtonStyle(

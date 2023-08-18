@@ -29,7 +29,7 @@ class _signInScreenState extends State<signInScreen> {
             padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.height * 0.2, 20, 0),
             child: Column(
               children: <Widget>[
-                logoWidget("assets/creative-teaching.png"),
+                logoWidget("assets/logoBEE.png"),
                 SizedBox(
                   height: 30,
                 ),
