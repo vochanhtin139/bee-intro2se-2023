@@ -93,12 +93,52 @@ class _dictionaryDetailScreenState extends State<dictionaryDetailScreen> {
             // )
           ],
           bottom: TabBar(
-            indicatorColor: const Color.fromARGB(255, 9, 138, 13),
+            indicatorColor: Color.fromARGB(255, 246, 107, 92),
             tabs: [
-              Tab(text: 'TỪ ĐIỂN OFFLINE'),
-              Tab(text: 'TỪ ĐIỂN OXFORD'),
-              Tab(text: 'TỪ ĐIỂN CAMBRIDGE'),
-              Tab(text: 'HÌNH ẢNH'),
+              Tab(
+                child: Text(
+                  'OFFLINE',
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto'
+                  ),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'OXFORD',
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto'
+                  ),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'CAMBRIDGE',
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto'
+                  ),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'HÌNH ẢNH',
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto'
+                  ),
+                ),
+              ),
             ],
           ),
           elevation: 20,
