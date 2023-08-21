@@ -112,7 +112,7 @@ class _homeScreenState extends State<dictionaryScreen> {
           listview = Scaffold(
             key: _scaffoldKey,
             appBar: AppBar(
-              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              backgroundColor: Color.fromARGB(255, 255, 177, 60),
               leading: IconButton(
                 onPressed: () {
                   _scaffoldKey.currentState?.openDrawer();
@@ -212,12 +212,12 @@ class _homeScreenState extends State<dictionaryScreen> {
   Widget buildCardHorizontal({required wordMeaning item}) => Card(
     elevation: 4,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    margin: const EdgeInsets.all(10),
+    margin: const EdgeInsets.all(20),
     child: Container(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(8),
       width: 300,
       height: 300,
-      color: Theme.of(context).colorScheme.inversePrimary,
+      color: Color.fromARGB(255, 255, 177, 60),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -236,7 +236,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                   '${item.word}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 25,
+                    fontSize: 24,
                     color: Colors.black,
                   ),
                 ),
@@ -251,7 +251,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                   '${item.pronounce}',
                   style: TextStyle(
                     fontWeight: FontWeight.normal,
-                    fontSize: 15,
+                    fontSize: 14,
                     color: Color.fromARGB(255, 0, 0, 0),
                     fontStyle: FontStyle.italic
                   ),
@@ -267,7 +267,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                   '${item.description}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 15,
+                    fontSize: 14,
                     color: const Color.fromARGB(255, 0, 0, 0),
                   ),
                   maxLines: 2,
@@ -287,10 +287,11 @@ class _homeScreenState extends State<dictionaryScreen> {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     margin: const EdgeInsets.all(10),
     child: Container(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
       width: 300,
+      
       // height: 100,
-      color: Theme.of(context).colorScheme.inversePrimary,
+      color: Color.fromARGB(255, 255, 177, 60),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: 
@@ -307,7 +308,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                           '${item.word}',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 18,
                             color: Colors.black,
                           ),
                         ),
@@ -323,7 +324,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                           '${item.pronounce}',
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
-                            fontSize: 15,
+                            fontSize: 12,
                             color: Color.fromARGB(255, 0, 0, 0),
                             fontStyle: FontStyle.italic
                           ),
@@ -340,7 +341,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                   '${item.description}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 15,
+                    fontSize: 12,
                     color: Colors.black,
                   ),
                   textAlign: TextAlign.justify,
