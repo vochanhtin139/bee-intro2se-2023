@@ -177,7 +177,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
-                          color: Color.fromARGB(255, 140, 127, 127),
+                          color: Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
                     ),
@@ -237,7 +237,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
-                    color: Colors.yellow,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -252,7 +252,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: 15,
-                    color: Color.fromARGB(255, 140, 127, 127),
+                    color: Color.fromARGB(255, 0, 0, 0),
                     fontStyle: FontStyle.italic
                   ),
                 ),
@@ -268,7 +268,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
-                    color: Colors.yellow,
+                    color: const Color.fromARGB(255, 0, 0, 0),
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -308,7 +308,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
-                            color: Colors.yellow,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -324,7 +324,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             fontSize: 15,
-                            color: Color.fromARGB(255, 140, 127, 127),
+                            color: Color.fromARGB(255, 0, 0, 0),
                             fontStyle: FontStyle.italic
                           ),
                         ),
@@ -341,7 +341,7 @@ class _homeScreenState extends State<dictionaryScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
-                    color: Colors.yellow,
+                    color: Colors.black,
                   ),
                   textAlign: TextAlign.justify,
                 ),
