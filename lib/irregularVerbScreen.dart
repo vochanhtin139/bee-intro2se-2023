@@ -15,19 +15,32 @@ class _irregularVerbScreenState extends State<irregularVerbScreen> {
   List<irregularVerb> matchQuery = [];
 
   final TextEditingController myController = TextEditingController(); 
+  final _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    // myController.text = '';
     myController.addListener(filterSuggestions);
-    String emptystr = '';
-    dbHelper.getSuggestionWordSearching(emptystr.toLowerCase().trim()).then((rows) {
+
+    _focusNode.addListener(() {
+      dbHelper.getAllWord().then((rows) {
+        matchQuery = [];
+
+        rows.forEach((row) { 
+          matchQuery.add(irregularVerb.map(row));
+        });
+      });
+    });
+    
+    dbHelper.getAllWord().then((rows) {
       matchQuery = [];
 
       rows.forEach((row) { 
         matchQuery.add(irregularVerb.map(row));
       });
     });
+
   }
   
   @override
@@ -68,8 +81,6 @@ class _irregularVerbScreenState extends State<irregularVerbScreen> {
       Padding(
         padding: EdgeInsets.all(10),
         child: Row(
-        // mainAxisSize: MainAxisSize.min,
-        // mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.only(right: 10),
@@ -82,6 +93,7 @@ class _irregularVerbScreenState extends State<irregularVerbScreen> {
           Expanded(child: TextField(
             controller: myController,
             autofocus: true,
+            focusNode: _focusNode,
             decoration: InputDecoration(
               hintText: 'Nhập từ vựng...',
               // bder: OutlineInputBorder(),
