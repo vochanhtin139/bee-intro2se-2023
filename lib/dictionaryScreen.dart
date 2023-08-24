@@ -385,6 +385,55 @@ Drawer buildDrawer(BuildContext context, Function callback, Function(bool) updat
                   margin: EdgeInsets.fromLTRB(10, 10, 10, 2.5),
                   padding: EdgeInsets.fromLTRB(5, 5, 5, 2.5),
                   child: Text(
+                    "Tài khoản", 
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          ListTile(
+            leading: Icon(Icons.login),
+            title: Text('Đăng nhập'),
+            onTap: () {
+              //do sth
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.assignment),
+            title: Text('Đăng ký'),
+            onTap: () {
+              //do sth
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Đăng xuất'),
+            onTap: () {
+              //do sth
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.question_mark),
+            title: Text('Quên mật khẩu'),
+            onTap: () {
+              //do sth
+              Navigator.pop(context);
+            },
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(10, 10, 10, 2.5),
+                  padding: EdgeInsets.fromLTRB(5, 5, 5, 2.5),
+                  child: Text(
                     "Loại từ điển", 
                     style: TextStyle(
                       fontSize: 15,
@@ -463,6 +512,48 @@ Drawer buildDrawer(BuildContext context, Function callback, Function(bool) updat
               Navigator.push(context, MaterialPageRoute(builder: (context) => irregularVerbScreen()));
             },
           ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(10, 10, 10, 2.5),
+                  padding: EdgeInsets.fromLTRB(5, 5, 5, 2.5),
+                  child: Text(
+                    "Thông tin", 
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          ListTile(
+            leading: Icon(Icons.info),
+            title: Text('Phiên bản'),
+            onTap: () {
+              //do sth
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.reviews),
+            title: Text('Đánh giá'),
+            onTap: () {
+              //do sth
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.info_sharp),
+            title: Text('Thông tin thêm'),
+            onTap: () {
+              //do sth
+              Navigator.pop(context);
+            },
+          ),
+
           Row(
             children: [
               Expanded(
