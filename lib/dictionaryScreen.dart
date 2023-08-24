@@ -369,7 +369,11 @@ Drawer buildDrawer(BuildContext context, Function callback, Function(bool) updat
                 child: Container(
                   height: 200,
                   color: Colors.orange,
-                  child: Center(child: Text("BEE")),
+                  child: Center(child: Image.asset(
+                'assets/logoBEE.png', // Replace 'assets/logo.png' with the actual path to your logo image
+                width: 120, // Adjust the width as per your requirement
+                height: 120, // Adjust the height as per your requirement
+              ),),
                 ),
               )
             ],
