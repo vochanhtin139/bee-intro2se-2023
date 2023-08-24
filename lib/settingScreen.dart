@@ -25,11 +25,11 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Color.fromARGB(255, 255, 177, 60),
         title: Text(
           'Cài đặt',
           style: TextStyle(
-            color: Colors.yellow,
+            color: Colors.black,
           ),
         )
       ),
@@ -70,7 +70,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 margin: EdgeInsets.all(10),
                 width: 350,
                 height: 50,
-                color: Theme.of(context).colorScheme.inversePrimary,
+                color: Color.fromARGB(255, 255, 177, 60),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
@@ -83,8 +83,8 @@ class _SettingScreenState extends State<SettingScreen> {
                             'Xoá lịch sử tìm kiếm',
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
-                              fontSize: 15,
-                              color: Colors.yellow,
+                              fontSize: 12,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -104,7 +104,7 @@ class _SettingScreenState extends State<SettingScreen> {
               margin: EdgeInsets.all(10),
               width: 350,
               height: 50,
-              color: Theme.of(context).colorScheme.inversePrimary,
+              color: Color.fromARGB(255, 255, 177, 60),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
@@ -117,8 +117,8 @@ class _SettingScreenState extends State<SettingScreen> {
                           'Chức năng Từ vựng ngẫu nhiên',
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
-                            fontSize: 15,
-                            color: Colors.yellow,
+                            fontSize: 12,
+                            color: Colors.black,
                           ),
                         ),
                       ),
