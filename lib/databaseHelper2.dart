@@ -1,3 +1,4 @@
+// This database helper for Irregular Verb Feature
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
