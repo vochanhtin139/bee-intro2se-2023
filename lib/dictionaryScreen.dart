@@ -5,6 +5,7 @@ import 'package:bee/wordMeaning.dart';
 import 'package:bee/irregularVerbScreen.dart';
 import 'package:bee/settingScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'dictionaryDetailScreen.dart';
@@ -132,10 +133,32 @@ class _homeScreenState extends State<dictionaryScreen> {
                   },
                   icon: Icon(Icons.search)
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.more_vert)
-                )
+                // IconButton(
+                //   onPressed: () {},
+                //   icon: Icon(Icons.more_vert)
+                // )
+                PopupMenuButton<String>(
+                  icon: Icon(Icons.more_vert),
+                  onSelected: (value) {
+                    if (value == 'AV') {
+                      DatabaseHelper.setToAV();
+                    }
+                    else {
+                      DatabaseHelper.setToVA();
+                    }
+                  },
+                  itemBuilder: (BuildContext context) {
+                    return [
+                      PopupMenuItem<String>(
+                        value: 'AV',
+                        child: Text('Anh - Việt'),
+                      ),
+                      PopupMenuItem<String>(
+                        value: 'VA',
+                        child: Text('Việt - Anh'),
+                      ),
+                    ];
+                  }),
               ],
             ),
             drawer: buildDrawer(context, callback, callbackValue),
