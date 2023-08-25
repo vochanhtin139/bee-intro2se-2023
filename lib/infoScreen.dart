@@ -38,6 +38,7 @@ class _infoScreenState extends State<infoScreen> {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
+                    color: Colors.orange,
                   ),
                 ),
                 Text(
@@ -47,7 +48,7 @@ class _infoScreenState extends State<infoScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -65,7 +66,7 @@ class _infoScreenState extends State<infoScreen> {
                     fontSize: 14,
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -83,7 +84,7 @@ class _infoScreenState extends State<infoScreen> {
                     fontSize: 14,
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -98,7 +99,7 @@ class _infoScreenState extends State<infoScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                  child: Text(
-                  'Đội ngũ phát triển dự án BEE - Be English Expert thuộc lớp 21CLC10 khoa Công nghệ thông tin chương trình Chất lượng cao thuộc trường Đại học Khoa học tự nhiên - ĐHQG TP.HCM',
+                  'Đội ngũ phát triển dự án BEE - Be English Expert thuộc lớp 21CLC10 chương trình Chất lượng cao khoa Công nghệ thông tin thuộc trường Đại học Khoa học Tự nhiên - ĐHQG-HCM',
                   style: TextStyle(
                     fontSize: 14,
                   ),
@@ -114,6 +115,7 @@ class _infoScreenState extends State<infoScreen> {
                   ),
                 ),
                 ),
+                SizedBox(height: 20),
               ],
             ),
           ),
