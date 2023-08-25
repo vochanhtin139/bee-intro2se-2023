@@ -1,4 +1,6 @@
 import 'package:bee/databaseHelper.dart';
+import 'package:bee/signInScreen.dart';
+import 'package:bee/signUpScreen.dart';
 import 'package:bee/wordMeaning.dart';
 import 'package:bee/irregularVerbScreen.dart';
 import 'package:bee/settingScreen.dart';
@@ -400,7 +402,7 @@ Drawer buildDrawer(BuildContext context, Function callback, Function(bool) updat
             title: Text('Đăng nhập'),
             onTap: () {
               //do sth
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => signInScreen()));
             },
           ),
           ListTile(
@@ -408,7 +410,7 @@ Drawer buildDrawer(BuildContext context, Function callback, Function(bool) updat
             title: Text('Đăng ký'),
             onTap: () {
               //do sth
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => signUpScreen()));
             },
           ),
           ListTile(
@@ -419,14 +421,14 @@ Drawer buildDrawer(BuildContext context, Function callback, Function(bool) updat
               Navigator.pop(context);
             },
           ),
-          ListTile(
-            leading: Icon(Icons.question_mark),
-            title: Text('Quên mật khẩu'),
-            onTap: () {
-              //do sth
-              Navigator.pop(context);
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.question_mark),
+          //   title: Text('Quên mật khẩu'),
+          //   onTap: () {
+          //     //do sth
+          //     Navigator.pop(context);
+          //   },
+          // ),
           Row(
             children: [
               Expanded(
