@@ -4,6 +4,7 @@ import 'package:bee/signUpScreen.dart';
 import 'package:bee/wordMeaning.dart';
 import 'package:bee/irregularVerbScreen.dart';
 import 'package:bee/settingScreen.dart';
+import 'package:bee/infoScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -557,17 +558,20 @@ Drawer buildDrawer(BuildContext context, Function callback, Function(bool) updat
           ListTile(
             leading: Icon(Icons.info),
             title: Text('Phiên bản'),
-            onTap: () {
-              //do sth
-              Navigator.pop(context);
-            },
+            subtitle: Text('1.0'),
           ),
           ListTile(
             leading: Icon(Icons.reviews),
             title: Text('Đánh giá'),
             onTap: () {
-              //do sth
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MiniBrowser(
+                    initialUrl: 'https://docs.google.com/forms/d/1Dl6pPX47e95gpmNiWqq89wRnEBUvNjnA9ReHT-7gFLw/edit',
+                  ),
+                ),
+              );
             },
           ),
           ListTile(
@@ -575,7 +579,8 @@ Drawer buildDrawer(BuildContext context, Function callback, Function(bool) updat
             title: Text('Thông tin thêm'),
             onTap: () {
               //do sth
-              Navigator.pop(context);
+              //Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => infoScreen()));
             },
           ),
 
